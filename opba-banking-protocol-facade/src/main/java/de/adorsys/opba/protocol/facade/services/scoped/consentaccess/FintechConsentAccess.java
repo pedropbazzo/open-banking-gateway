@@ -75,7 +75,7 @@ public class FintechConsentAccess implements ConsentAccess {
                 serviceSession.getAuthSession().getAction().getBankProfile().getBank().getId()
         );
         List<Consent> consent = consents.findByServiceSessionIdOrderByModifiedAtDesc(serviceSession.getId());
-        if (!psuAspspPrivateKey.isPresent() || consent.isEmpty()) {
+        if (psuAspspPrivateKey.isEmpty() || consent.isEmpty()) {
             return Collections.emptyList();
         }
 
