@@ -38,6 +38,7 @@ paths:
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK"
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID"
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID"
+        - $ref: "./tpp_banking_api_commons.yml#/components/parameters/X-Create-Consent-If-None"
           # query
         - $ref: "#/components/parameters/withBalance"
         - $ref: "#/components/parameters/online"
@@ -80,6 +81,7 @@ paths:
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK"
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID"
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID"
+        - $ref: "./tpp_banking_api_commons.yml#/components/parameters/X-Create-Consent-If-None"
         #query
         - $ref: "#/components/parameters/dateFrom"
         - $ref: "#/components/parameters/dateTo"
@@ -120,6 +122,7 @@ paths:
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/Fintech-Redirect-URL-NOK"
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/Service-Session-ID"
         - $ref: "./tpp_banking_api_commons.yml#/components/parameters/X-Request-ID"
+        - $ref: "./tpp_banking_api_commons.yml#/components/parameters/X-Create-Consent-If-None"
         #query
         - $ref: "#/components/parameters/dateFrom"
         - $ref: "#/components/parameters/dateTo"
@@ -987,6 +990,80 @@ components:
       type: string
       maxLength: 70
       example: "Ultimate Debtor"
+
+    AisAccountAccessInfo:
+      title: AisAccountAccessInfo
+      type: object
+      properties:
+        accounts:
+          type: array
+          description: Access to accounts
+          items:
+            $ref: "#/components/schemas/AccountReference"
+        allPsd2:
+          type: string
+          description: Consent on all accounts, balances and transactions of psu
+          example: ALL_ACCOUNTS
+          enum:
+            - ALL_ACCOUNTS
+            - ALL_ACCOUNTS_WITH_BALANCES
+        availableAccounts:
+          type: string
+          description: Consent on all available accounts of psu
+          example: ALL_ACCOUNTS
+          enum:
+            - ALL_ACCOUNTS
+            - ALL_ACCOUNTS_WITH_BALANCES
+        balances:
+          type: array
+          description: Access to balances
+          items:
+            $ref: "#/components/schemas/AccountReference"
+        transactions:
+          type: array
+          description: Access to transactions
+          items:
+            $ref: "#/components/schemas/AccountReference"
+      description: Ais account access information
+
+    AisConsentRequest:
+      title: AisConsentRequest
+      required:
+        - access
+        - frequencyPerDay
+        - recurringIndicator
+        - validUntil
+      type: object
+      properties:
+        access:
+          $ref: "#/components/schemas/AisAccountAccessInfo"
+        frequencyPerDay:
+          type: integer
+          description:
+            Maximum frequency for an access per day. For a once-off access,
+            this attribute is set to 1
+          format: int32
+          example: 4
+        recurringIndicator:
+          type: boolean
+          description:
+            "'true', if the consent is for recurring access to the account
+              data , 'false', if the consent is for one access to the account data"
+          example: false
+        validUntil:
+          type: string
+          description:
+            Consent`s expiration date. The content is the local ASPSP date
+            in ISODate Format
+          format: date
+          example: 2020-10-10
+        combinedServiceIndicator:
+          type: boolean
+          description:
+            "'true', if the consent is i.e. account list and then payment
+              'false', if the consent is for one access to the account data"
+          default: false
+      description: Ais consent request
 
   securitySchemes:
     BearerAuthOAuth:

@@ -160,7 +160,11 @@ export class StorageService {
         withBalance: true,
         cacheLoa: false,
         cacheLot: false,
-        paymentRequiresAuthentication: false
+        paymentRequiresAuthentication: false,
+        combinedServiceIndicator: false,
+        frequencyPerDay: 4,
+        recurringIndicator: true,
+        validUntil: new Date().toISOString().split('T')[0]
       };
     }
     return JSON.parse(setting);

@@ -33,7 +33,8 @@ public class FinTechAccountInformationImpl implements FinTechAccountInformationA
     @Override
     public ResponseEntity<AccountList> aisAccountsGET(String bankId, UUID xRequestID, String xsrfToken,
                                                       String fintechRedirectURLOK, String fintechRedirectURLNOK,
-                                                      String loARetrievalInformation, Boolean withBalance, Boolean online) {
+                                                      String loARetrievalInformation, String xCreateConsentIfNone,
+                                                      Boolean withBalance, Boolean online) {
         if (!sessionLogicService.isSessionAuthorized()) {
             log.warn("aisAccountsGET failed: user is not authorized!");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -41,15 +42,16 @@ public class FinTechAccountInformationImpl implements FinTechAccountInformationA
 
         SessionEntity sessionEntity = sessionLogicService.getSession();
         return sessionLogicService.addSessionMaxAgeToHeader(accountService.listAccounts(sessionEntity,
-                fintechRedirectURLOK, fintechRedirectURLNOK, bankId, LoARetrievalInformation.valueOf(loARetrievalInformation), withBalance, online));
+                fintechRedirectURLOK, fintechRedirectURLNOK, bankId, LoARetrievalInformation.valueOf(loARetrievalInformation), xCreateConsentIfNone, withBalance, online));
     }
 
     @Override
     public ResponseEntity<TransactionsResponse> aisTransactionsGET(String bankId, String accountId, UUID xRequestID,
-                                                                   String xsrfToken, String fintechRedirectURLOK, String fintechRedirectURLNOK,
-                                                                   String loTRetrievalInformation,
-                                                                   LocalDate dateFrom, LocalDate dateTo,
-                                                                   String entryReferenceFrom, String bookingStatus, Boolean deltaList, Boolean online) {
+                                                                   String xsrfToken, String fintechRedirectURLOK,
+                                                                   String fintechRedirectURLNOK, String loTRetrievalInformation,
+                                                                   String xCreateConsentIfNone, LocalDate dateFrom,
+                                                                   LocalDate dateTo, String entryReferenceFrom,
+                                                                   String bookingStatus, Boolean deltaList, Boolean online) {
         if (!sessionLogicService.isSessionAuthorized()) {
             log.warn("aisTransactionsGET failed: user is not authorized!");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -57,7 +59,7 @@ public class FinTechAccountInformationImpl implements FinTechAccountInformationA
         SessionEntity sessionEntity = sessionLogicService.getSession();
         return sessionLogicService.addSessionMaxAgeToHeader(
                 transactionService.listTransactions(sessionEntity, fintechRedirectURLOK, fintechRedirectURLNOK,
-                bankId, accountId, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, LoTRetrievalInformation.valueOf(loTRetrievalInformation), online));
+                bankId, accountId, xCreateConsentIfNone, dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, LoTRetrievalInformation.valueOf(loTRetrievalInformation), online));
     }
 
     @Override

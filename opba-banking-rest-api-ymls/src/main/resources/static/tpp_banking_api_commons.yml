@@ -185,6 +185,14 @@ components:
         type: string
       example: "https://example.com/myservice/sf3-3r33-3535/failure"
 
+    X-Create-Consent-If-None:
+      name: X-Create-Consent-If-None
+      required: false
+      in: header
+      schema:
+        type: object
+        format: AisConsentRequest
+
   responses:
     401_UNAUTHORIZED:
       description: |

@@ -97,15 +97,16 @@ export class FinTechAccountInformationService {
      * @param fintechRedirectURLOK 
      * @param fintechRedirectURLNOK 
      * @param loARetrievalInformation 
+     * @param xCreateConsentIfNone 
      * @param withBalance Provides balances for the given accounts
      * @param online If true, new data will be requested and cache will be updated 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', withBalance?: boolean, online?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<AccountList>;
-    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', withBalance?: boolean, online?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<AccountList>>;
-    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', withBalance?: boolean, online?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<AccountList>>;
-    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', withBalance?: boolean, online?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, withBalance?: boolean, online?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<AccountList>;
+    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, withBalance?: boolean, online?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<AccountList>>;
+    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, withBalance?: boolean, online?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<AccountList>>;
+    public aisAccountsGET(bankId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loARetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, withBalance?: boolean, online?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (bankId === null || bankId === undefined) {
             throw new Error('Required parameter bankId was null or undefined when calling aisAccountsGET.');
         }
@@ -150,6 +151,9 @@ export class FinTechAccountInformationService {
         }
         if (loARetrievalInformation !== undefined && loARetrievalInformation !== null) {
             headers = headers.set('LoARetrievalInformation', String(loARetrievalInformation));
+        }
+        if (xCreateConsentIfNone !== undefined && xCreateConsentIfNone !== null) {
+            headers = headers.set('X-Create-Consent-If-None', String(xCreateConsentIfNone));
         }
 
         // authentication (sessionCookie) required
@@ -266,6 +270,7 @@ export class FinTechAccountInformationService {
      * @param fintechRedirectURLOK 
      * @param fintechRedirectURLNOK 
      * @param loTRetrievalInformation 
+     * @param xCreateConsentIfNone 
      * @param dateFrom Conditional: Starting date (inclusive the date dateFrom) of the transaction list, mandated if no delta access is required.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP. 
      * @param dateTo End date (inclusive the data dateTo) of the transaction list, default is \&quot;now\&quot; if not given.  Might be ignored if a delta function is used.  For booked transactions, the relevant date is the booking date.  For pending transactions, the relevant date is the entry date, which may not be transparent neither in this API nor other channels of the ASPSP. 
      * @param entryReferenceFrom This data attribute is indicating that the AISP is in favour to get all transactions after the transaction with identification entryReferenceFrom alternatively to the above defined period. This is a implementation of a delta access. If this data element is contained, the entries \&quot;dateFrom\&quot; and \&quot;dateTo\&quot; might be ignored by the ASPSP if a delta report is supported.  Optional if supported by API provider. 
@@ -275,10 +280,10 @@ export class FinTechAccountInformationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TransactionsResponse>;
-    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TransactionsResponse>>;
-    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TransactionsResponse>>;
-    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<TransactionsResponse>;
+    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<TransactionsResponse>>;
+    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<TransactionsResponse>>;
+    public aisTransactionsGET(bankId: string, accountId: string, xRequestID: string, xXSRFTOKEN: string, fintechRedirectURLOK: string, fintechRedirectURLNOK: string, loTRetrievalInformation: 'FROM_TPP_WITH_AVAILABLE_CONSENT' | 'FROM_TPP_WITH_NEW_CONSENT', xCreateConsentIfNone?: string, dateFrom?: string, dateTo?: string, entryReferenceFrom?: string, bookingStatus?: 'booked' | 'pending' | 'both', deltaList?: boolean, online?: boolean, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (bankId === null || bankId === undefined) {
             throw new Error('Required parameter bankId was null or undefined when calling aisTransactionsGET.');
         }
@@ -342,6 +347,9 @@ export class FinTechAccountInformationService {
         }
         if (loTRetrievalInformation !== undefined && loTRetrievalInformation !== null) {
             headers = headers.set('LoTRetrievalInformation', String(loTRetrievalInformation));
+        }
+        if (xCreateConsentIfNone !== undefined && xCreateConsentIfNone !== null) {
+            headers = headers.set('X-Create-Consent-If-None', String(xCreateConsentIfNone));
         }
 
         // authentication (sessionCookie) required

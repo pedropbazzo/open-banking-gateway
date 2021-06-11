@@ -46,6 +46,7 @@ public class ConsentService {
                 null,
                 bankId,
                 serviceSessionId,
+                "",
                 null,
                 null,
                 null,

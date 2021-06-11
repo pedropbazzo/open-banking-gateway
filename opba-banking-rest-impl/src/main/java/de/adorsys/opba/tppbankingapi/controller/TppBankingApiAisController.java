@@ -3,6 +3,7 @@ package de.adorsys.opba.tppbankingapi.controller;
 import de.adorsys.opba.protocol.api.dto.context.UserAgentContext;
 import de.adorsys.opba.protocol.api.dto.request.FacadeServiceableRequest;
 import de.adorsys.opba.protocol.api.dto.request.accounts.ListAccountsRequest;
+import de.adorsys.opba.protocol.api.dto.request.authorization.AisConsent;
 import de.adorsys.opba.protocol.api.dto.request.transactions.ListTransactionsRequest;
 import de.adorsys.opba.protocol.api.dto.result.body.AccountListBody;
 import de.adorsys.opba.protocol.api.dto.result.body.TransactionsResponseBody;
@@ -49,6 +50,7 @@ public class TppBankingApiAisController implements TppBankingApiAccountInformati
         String fintechId,
         String bankID,
         UUID serviceSessionId,
+        Object xCreateConsentIfNone,
         Boolean withBalance,
         Boolean online
     ) {
@@ -66,6 +68,7 @@ public class TppBankingApiAisController implements TppBankingApiAccountInformati
                     .requestId(xRequestID)
                     .bankId(bankID)
                     .online(online)
+                    .aisConsent((AisConsent) xCreateConsentIfNone)
                     .build()
                 )
                 .withBalance(withBalance)
@@ -86,6 +89,7 @@ public class TppBankingApiAisController implements TppBankingApiAccountInformati
         String fintechId,
         String bankID,
         UUID serviceSessionId,
+        Object xCreateConsentIfNone,
         LocalDate dateFrom,
         LocalDate dateTo,
         String entryReferenceFrom,
@@ -108,6 +112,7 @@ public class TppBankingApiAisController implements TppBankingApiAccountInformati
                     .requestId(xRequestID)
                     .bankId(bankID)
                     .online(online)
+                    .aisConsent((AisConsent) xCreateConsentIfNone)
                     .withAnalytics(analytics)
                     .build()
                 )
@@ -133,6 +138,7 @@ public class TppBankingApiAisController implements TppBankingApiAccountInformati
         String fintechId,
         String bankId,
         UUID serviceSessionId,
+        Object xCreateConsentIfNone,
         LocalDate dateFrom,
         LocalDate dateTo,
         String entryReferenceFrom,
@@ -152,6 +158,7 @@ public class TppBankingApiAisController implements TppBankingApiAccountInformati
                     .serviceSessionId(serviceSessionId)
                     .requestId(xRequestID)
                     .bankId(bankId)
+                    .aisConsent((AisConsent) xCreateConsentIfNone)
                     .build()
                 )
                 .dateFrom(dateFrom)

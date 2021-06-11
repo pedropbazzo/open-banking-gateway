@@ -26,6 +26,7 @@ public class TppAisClientFeignMock implements TppAisClient {
             String fintechId,
             String bankID,
             UUID serviceSessionID,
+            Object xCreateConsentIfNone,
             Boolean useObgCache,
             Boolean withBalance
     ) {
@@ -45,6 +46,7 @@ public class TppAisClientFeignMock implements TppAisClient {
             String fintechId,
             String bankID,
             UUID serviceSessionID,
+            Object xCreateConsentIfNone,
             LocalDate dateFrom,
             @Valid LocalDate dateTo,
             String entryReferenceFrom,
@@ -68,6 +70,7 @@ public class TppAisClientFeignMock implements TppAisClient {
             String fintechID,
             String bankID,
             UUID serviceSessionID,
+            Object xCreateConsentIfNone,
             LocalDate dateFrom,
             LocalDate dateTo,
             String entryReferenceFrom,

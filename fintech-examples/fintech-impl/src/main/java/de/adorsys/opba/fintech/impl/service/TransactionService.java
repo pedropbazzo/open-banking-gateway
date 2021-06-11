@@ -40,7 +40,7 @@ public class TransactionService {
     private final HandleAcceptedService handleAcceptedService;
 
     public ResponseEntity listTransactions(SessionEntity sessionEntity, String fintechOkUrl, String fintechNOkUrl, String bankId,
-                                           String accountId, LocalDate dateFrom, LocalDate dateTo, String entryReferenceFrom,
+                                           String accountId, String xCreateConsentIfNone, LocalDate dateFrom, LocalDate dateTo, String entryReferenceFrom,
                                            String bookingStatus, Boolean deltaList, LoTRetrievalInformation loTRetrievalInformation,
                                            Boolean online) {
         log.info("LoT {}", loTRetrievalInformation);
@@ -66,7 +66,7 @@ public class TransactionService {
             COMPUTE_X_TIMESTAMP_UTC,
             COMPUTE_X_REQUEST_SIGNATURE,
             COMPUTE_FINTECH_ID, bankId,
-            optionalConsent.map(ConsentEntity::getTppServiceSessionId).orElse(null),
+            optionalConsent.map(ConsentEntity::getTppServiceSessionId).orElse(null), xCreateConsentIfNone,
             dateFrom, dateTo, entryReferenceFrom, bookingStatus, deltaList, online, true);
         switch (transactions.getStatusCode()) {
             case OK:
