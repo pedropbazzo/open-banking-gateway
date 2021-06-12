@@ -55,7 +55,7 @@ paths:
         "410":
           $ref: "#/components/responses/ErrorShownInXErrorCodeHeaderField"
         "429":
-          $ref: "#/components/responses/ErrorShownInXErrorCodeHeaderField"
+          $ref: "#/components/responses/ErrorShownInXErrorCodeHeaderField" 
 
   /v1/banking/ais/accounts/{account-id}/transactions:
     get:
